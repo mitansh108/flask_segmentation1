@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import io
 import base64
+import os
 
 app = Flask(__name__)
 
@@ -14,9 +15,19 @@ app = Flask(__name__)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Load the segmentation model
+import os
+
+# Get the base directory of the project
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Path to the model file relative to the base directory
+model_path = os.path.join(BASE_DIR, 'models', 'micronet_resnet50_steel_dataset.pth')
+
+# Load the segmentation model
 model = Unet('resnet50', encoder_weights=None, classes=1).to(device)
-model.load_state_dict(torch.load('/Users/mitanshpatel/Downloads/micronet_resnet50_steel_dataset.pth', map_location=device))
+model.load_state_dict(torch.load(model_path, map_location=device))
 model.eval()  # Set model to evaluation mode
+
 
 # Define preprocessing transformation
 def preprocess_image(image):
@@ -91,6 +102,12 @@ def segment():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+
+
 
 
 
