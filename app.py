@@ -21,7 +21,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Path to the model file relative to the base directory
-model_path = os.path.join(BASE_DIR, 'models', 'micronet_resnet50_steel_dataset.pth')
+model_path = os.path.join(BASE_DIR, 'micronet_resnet50_steel_dataset.pth')
 
 # Load the segmentation model
 model = Unet('resnet50', encoder_weights=None, classes=1).to(device)
